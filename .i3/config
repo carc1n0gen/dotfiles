@@ -9,6 +9,12 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+
+# Look/feel
+new_window pixel 2
+
+
+# Keys
 set $mod Mod4
 
 # darkest ark color (use for small seperator bars
