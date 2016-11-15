@@ -2,6 +2,7 @@
 #
 # Copyright 2014 Pierre Mavro <deimos@deimos.fr>
 # Copyright 2014 Vivien Didelot <vivien@didelot.org>
+# Copyright 2016 Carson Evans <me@carsonevans.ca>
 #
 # Licensed under the terms of the GNU GPL v3, or any later version.
 #
@@ -54,14 +55,7 @@ if ($status eq 'Discharging') {
 }
 
 # Add the percent
-$full_text .= "$percent%";
-
-#if ($status eq 'Discharging') {
-#	$full_text .= ' DIS';
-#} elsif ($status eq 'Charging') {
-#	$full_text .= ' CHR';
-#}
-
+$full_text .= "$percent%";}
 $short_text = $full_text;
 
 # Get time until charged/discharged

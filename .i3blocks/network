@@ -15,21 +15,34 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 INTERFACE="${BLOCK_INSTANCE:-eth0}"
-
 state="$(cat /sys/class/net/$INTERFACE/operstate)"
 
 if [ "$state" != "up" ]; then
-	echo "down"
-	echo "down"
+	if [ "$INTERFACE" = "wlan0" ]; then
+		label=""
+	elif [ "$INTERFACE" = "eth0" ]; then
+		label=""
+	else
+		label="$INTERFACE"
+	fi;
+
+	echo "$label down"
+	echo "$label down"
 	echo "#FF0000"
-	exit 0
-fi
+fi;
 
 speed="$(cat /sys/class/net/$INTERFACE/speed 2> /dev/null)"
-
 ipaddr="$(ip addr show $INTERFACE | perl -n -e'/inet (.+)\// && print $1')"
 ipaddr="${ipaddr:-0.0.0.0}"
 ssid="$(iw dev $INTERFACE link | grep SSID | cut -d " " -f 2-)"
 
-echo -n "$ipaddr"
+if [ "$INTERFACE" = "wlan0" ]; then
+    	label=""
+elif [ "$INTERFACE" = "eth0" ]; then
+    	label=""
+else
+	label="$INTERFACE"
+fi;
+
+echo -n "$label $ipaddr"
 [ -n "$ssid" ] && echo " ($ssid)" || echo
