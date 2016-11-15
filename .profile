@@ -11,6 +11,8 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
+PATH=$PATH:/sbin
+
 . ~/.profile_private
 
 . ~/.gvm/scripts/gvm

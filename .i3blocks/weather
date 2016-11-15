@@ -1,4 +1,5 @@
 #!/bin/sh
+# Copyright (C) 2016 Ning Sun <sunng@about.me>
 # Copyright (C) 2016 Carson Evans <me@carsonevans.ca>
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,21 +15,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+CITY=$BLOCK_INSTANCE
+APPID=$OWM_API_KEY
+OUTPUT="$(curl -s http://api.openweathermap.org/data/2.5/weather\?APPID\=$APPID\&q\=$CITY\&units\=metric)"
 
-status="$(amixer get Master | tail -n1 | awk '{print $6}' | grep -E -o '[a-z][a-z]')"
-volume="$(amixer get Master | tail -n1 | awk '{print $5}' | grep -E -o '[0-9][0-9]?[0-9]?')"
+#echo $OUTPUT | jq -r ".main.temp"
+#echo $APPID
 
-if [ "$status" != "on" ] || [ "$volume" = "0" ]; then
-	label=""
-elif [ "$volume" -lt 50 ]; then
-	label=""
-else
-	label=""
-fi
+TEMP=$(echo $OUTPUT | jq -r ".main.temp")
+WEATHER=$(echo $OUTPUT | jq -r ".weather[0].main")
+case $WEATHER in
+    "Clear"*)
+        WEATHER=
+        ;;
+    "Rain"*)
+        WEATHER=
+        ;;
+    "Snow"*)
+        WEATHER=
+        ;;
+    "Thunderstorm"*)
+        WEATHER=
+        ;;
+esac
 
-echo "$label $volume%"
-echo "$label $volume%"
-
-if [ "$status" != "on" ]; then
-	echo "#FFAE00"
-fi
+echo "$WEATHER $CITY $TEMP°C"
+echo "$TEMP°C"
