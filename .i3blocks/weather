@@ -15,15 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-CITY=$BLOCK_INSTANCE
+# README:
+#
+# This script will get your city/country (based on your ip) address and
+# get weather information for that location.
+#
+# This script requires a environment variable "OWM_API_KEY" to be set
+# to a API key generated at openweathermap.org/api
+
 APPID=$OWM_API_KEY
-OUTPUT="$(curl -s http://api.openweathermap.org/data/2.5/weather\?APPID\=$APPID\&q\=$CITY\&units\=metric)"
+L_DATA="$(curl http://ip-api.com/json)"
+CITY=$(echo $L_DATA | jq -r ".city")
+COUNTRY=$(echo $L_DATA | jq -r ".countryCode")
 
-#echo $OUTPUT | jq -r ".main.temp"
-#echo $APPID
-
-TEMP=$(echo $OUTPUT | jq -r ".main.temp")
-WEATHER=$(echo $OUTPUT | jq -r ".weather[0].main")
+W_DATA="$(curl -s http://api.openweathermap.org/data/2.5/weather\?APPID\=$APPID\&q\=$CITY,$COUNTRY\&units\=metric)"
+TEMP=$(echo $W_DATA | jq -r ".main.temp")
+WEATHER=$(echo $W_DATA | jq -r ".weather[0].main")
 
 # TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
@@ -47,6 +54,5 @@ case $WEATHER in
         ;;
 esac
 
-CITY=$(echo $CITY | cut -d ',' -f 1)
 echo "$WEATHER $CITY $TEMP°C"
 echo "$TEMP°C"
