@@ -40,16 +40,16 @@ $full_text = '';
 # Set the label
 if ($status eq 'Discharging') {
 	if ($percent <= 25) {
-		$full_text .= ' ';
+		$full_text .= ' ';
 	} elsif ($percent <= 50) {
-		$full_text .= ' ';
+		$full_text .= ' ';
 	} elsif ($percent <= 75) {
-		$full_text .= ' ';
+		$full_text .= ' ';
 	} else {
-		$full_text .= ' ';
+		$full_text .= ' ';
 	}
 } elsif ($status eq 'Charging') {
-	$full_text .= ' ';
+	$full_text .= ' ';
 } else {
 	$full_text .= ' ';
 }

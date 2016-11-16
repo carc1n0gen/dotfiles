@@ -171,7 +171,8 @@ bar {
 	#status_command i3status | ./weather.py --wrap-i3-status --unit c 12773700
 	status_command i3blocks
 	#font pango:DejaVu Sans Mon, Icons, 12
-	font pango:DejaVu Sans Mon, FontAwesome, 12
+	#font pango:DejaVu Sans Mon, FontAwesome, 12
+	font pango:DejaVu Sans Mon, custom-i3-font, 12
 
 	colors {
 		background          $grey

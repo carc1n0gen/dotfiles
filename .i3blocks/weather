@@ -24,20 +24,29 @@ OUTPUT="$(curl -s http://api.openweathermap.org/data/2.5/weather\?APPID\=$APPID\
 
 TEMP=$(echo $OUTPUT | jq -r ".main.temp")
 WEATHER=$(echo $OUTPUT | jq -r ".weather[0].main")
+
+# TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
     "Clear"*)
-        WEATHER=
+        WEATHER=
+        ;;
+#    "Mist"*)
+#        WEATHER=
+#        ;;
+    "Clouds"*)
+        WEATHER=
         ;;
     "Rain"*)
-        WEATHER=
+        WEATHER=
         ;;
     "Snow"*)
-        WEATHER=
+        WEATHER=
         ;;
     "Thunderstorm"*)
-        WEATHER=
+        WEATHER=
         ;;
 esac
 
+CITY=$(echo $CITY | cut -d ',' -f 1)
 echo "$WEATHER $CITY $TEMP°C"
 echo "$TEMP°C"
