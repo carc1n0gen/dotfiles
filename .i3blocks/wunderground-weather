@@ -1,5 +1,4 @@
 #!/bin/sh
-# Copyright (C) 2016 Ning Sun <sunng@about.me>
 # Copyright (C) 2016 Carson Evans <me@carsonevans.ca>
 
 # This program is free software: you can redistribute it and/or modify
@@ -20,17 +19,18 @@
 # This script will get your city/country (based on your ip) address and
 # get weather information for that location.
 #
-# This script requires a environment variable "OWM_API_KEY" to be set
-# to a API key generated at openweathermap.org/api
+# This script requires a environment variable "WUNDERGROUND_KEY" to be set
+# to a API key generated at https://www.wunderground.com/weather/api
 
-APPID=$OWM_API_KEY
+API_KEY=$WUNDERGROUND_KEY
 L_DATA=$(curl -s http://ip-api.com/json)
+LAT=$(echo $L_DATA | jq -r ".lat")
+LONG=$(echo $L_DATA | jq -r ".lon")
 CITY=$(echo $L_DATA | jq -r ".city")
-COUNTRY=$(echo $L_DATA | jq -r ".countryCode")
 
-W_DATA=$(curl -s "http://api.openweathermap.org/data/2.5/weather?APPID=$APPID&q=$CITY,$COUNTRY&units=metric")
-TEMP=$(echo $W_DATA | jq -r ".main.temp")
-WEATHER=$(echo $W_DATA | jq -r ".weather[0].main")
+W_DATA=$(curl -s "http://api.wunderground.com/api/$API_KEY/conditions/q/$LAT,$LONG.json")
+TEMP=$(echo $W_DATA | jq -r ".current_observation.temp_c")
+WEATHER=$(echo $W_DATA | jq -r ".current_observation.weather")
 
 # TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
