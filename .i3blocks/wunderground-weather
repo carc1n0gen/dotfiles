@@ -22,6 +22,9 @@
 # This script requires a environment variable "WUNDERGROUND_KEY" to be set
 # to a API key generated at https://www.wunderground.com/weather/api
 
+# Load my private environment variables
+. ~/.profile_private
+
 API_KEY=$WUNDERGROUND_KEY
 L_DATA=$(curl -s http://ip-api.com/json)
 LAT=$(echo $L_DATA | jq -r ".lat")
@@ -29,8 +32,9 @@ LONG=$(echo $L_DATA | jq -r ".lon")
 CITY=$(echo $L_DATA | jq -r ".city")
 
 W_DATA=$(curl -s "http://api.wunderground.com/api/$API_KEY/conditions/q/$LAT,$LONG.json")
-TEMP=$(echo $W_DATA | jq -r ".current_observation.temp_c")
-WEATHER=$(echo $W_DATA | jq -r ".current_observation.weather")
+INFO=$(echo $W_DATA | jq -r ".current_observation.temp_c, .current_observation.weather")
+TEMP=$(echo $INFO | awk '{print $1}')
+WEATHER=$(echo $INFO | awk '{print $2}')
 
 # TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
