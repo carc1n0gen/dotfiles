@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Copyright 2016 Carson Evans <me@carsonevans.ca>
+#
+# Licensed under the terms of the GNU GPL v3, or any later version.
+#
+# This script is meant to use with i3blocks. It parses the output of the "acpi"
+# command (often provided by a package of the same name) to read the status of
+# the battery, and eventually its remaining time (to full charge or discharge).
+#
+# The color will gradually change for a percentage below 85%, and the urgency
+# (exit code 33) is set if there is less that 5% remaining.
+
+ACPI=$(acpi -b)
+
+STATUS=$(echo $ACPI | cut -d ' ' -f 3)
+PERCENT=$(echo $ACPI | cut -d ' ' -f 4 | grep -E -o '[0-9][0-9]?[0-9]?')
+REMAINING=$(echo $ACPI | cut -d ' ' -f 5)
+
+if [ $STATUS = 'Discharging,' ]; then
+    if [ $PERCENT -lt 20 ]; then
+        ICON=""
+    elif [ $PERCENT -lt 60 ]; then
+        ICON=""
+    elif [ $PERCENT -lt 85 ]; then
+        ICON=""
+    else
+        ICON=""
+    fi
+elif [ $STATUS = 'Charging,' ]; then
+    ICON=""
+else
+    ICON=""
+fi
+
+echo "$ICON $PERCENT% ($REMAINING)"
+echo "$PERCENT% ($REMAINING)"

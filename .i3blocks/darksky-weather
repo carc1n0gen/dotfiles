@@ -1,0 +1,85 @@
+#!/bin/sh
+# Copyright (C) 2016 Carson Evans <me@carsonevans.ca>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# README:
+#
+# This script will get your city/country (based on your ip) address and
+# get weather information for that location.
+#
+# This script requires a environment variable "WUNDERGROUND_KEY" to be set
+# to a API key generated at https://www.wunderground.com/weather/api
+
+. ~/.profile_private
+
+API_KEY=$DARKSKY_KEY
+L_DATA=$(curl -s http://ip-api.com/json)
+LAT=$(echo $L_DATA | jq -r ".lat")
+LONG=$(echo $L_DATA | jq -r ".lon")
+CITY=$(echo $L_DATA | jq -r ".city")
+
+# UNITS:
+#
+# Sets the units for weather conditions:
+#
+# - auto: automatically select units based on geographic location
+# - ca:   same as si, except that windSpeed is in kilometers per hour
+# - uk2:  same as si, except that nearestStormDistance and visibility are in miles and windSpeed is in miles per hour
+# - us:   Imperial units (the default)
+# - si:   SI units - Everything metric
+#
+# See https://darksky.net/dev/docs/forecast
+UNITS="ca"
+
+W_DATA=$(curl -s "https://api.darksky.net/forecast/$API_KEY/$LAT,$LONG?units=$UNITS")
+TEMP=$(echo $W_DATA | jq -r ".currently.temperature")
+WEATHER=$(echo $W_DATA | jq -r ".currently.summary")
+
+# TODO: Show moon/sun versions of things depending on time of day
+case $WEATHER in
+    "Clear")
+        ICON=
+        ;;
+    "Fog")
+        ICON=
+        ;;
+    "Partly Cloudy")
+        ICON=
+        ;;
+    "Clouds"|"Overcast")
+        ICON=
+        ;;
+    "Breezy and Overcast")
+        ICON=
+        ;;
+    "Rain")
+        ICON=
+        ;;
+    "Snow")
+        ICON=
+        ;;
+    "Thunderstorm")
+        ICON=
+        ;;
+    *)
+        ICON=$WEATHER
+        ;;
+esac
+
+echo -n "$ICON $CITY $TEMP"
+[ $UNITS != "us" ] && echo "°C" || echo "°F"
+
+echo -n "$CITY $TEMP"
+[ $UNITS != "us" ] && echo "°C" || echo "°F"
