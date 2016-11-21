@@ -34,25 +34,25 @@ WEATHER=$(echo $W_DATA | jq -r ".current_observation.weather")
 
 # TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
-    "Clear"*)
+    "Clear")
         WEATHER=
         ;;
-    "Mist"*)
+    "Mist")
         WEATHER=
         ;;
-    "Fog"*)
+    "Fog")
         WEATHER=
         ;;
-    "Clouds"*)
+    "Clouds"|"Overcast")
         WEATHER=
         ;;
-    "Rain"*)
+    "Rain")
         WEATHER=
         ;;
-    "Snow"*)
+    "Snow")
         WEATHER=
         ;;
-    "Thunderstorm"*)
+    "Thunderstorm")
         WEATHER=
         ;;
 esac

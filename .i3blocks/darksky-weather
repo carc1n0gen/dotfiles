@@ -14,14 +14,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# README:
+# WEATHER
+#
+# Powered by Dark Sky: https://darksky.net/poweredby/
 #
 # This script will get your city/country (based on your ip) address and
 # get weather information for that location.
 #
-# This script requires a environment variable "WUNDERGROUND_KEY" to be set
-# to a API key generated at https://www.wunderground.com/weather/api
+# This script requires a environment variable "DARKSKY_KEY" to be set
+# to a API key generated at https://darksky.net/dev
 
+# Load environment variables for this script
 . ~/.profile_private
 
 API_KEY=$DARKSKY_KEY
