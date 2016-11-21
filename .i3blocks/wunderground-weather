@@ -32,11 +32,10 @@ LONG=$(echo $L_DATA | jq -r ".lon")
 CITY=$(echo $L_DATA | jq -r ".city")
 
 W_DATA=$(curl -s "http://api.wunderground.com/api/$API_KEY/conditions/q/$LAT,$LONG.json")
-INFO=$(echo $W_DATA | jq -r ".current_observation.temp_c, .current_observation.weather")
-TEMP=$(echo $INFO | awk '{print $1}')
-WEATHER=$(echo $INFO | awk '{print $2}')
+TEMP=$(echo $W_DATA | jq -r ".current_observation.temp_c")
+WEATHER=$(echo $W_DATA | jq -r ".current_observation.weather")
 
-# TODO: Show moon/sun versions of things depending on time of day
+TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
     "Clear")
         WEATHER=
@@ -47,7 +46,7 @@ case $WEATHER in
     "Fog")
         WEATHER=
         ;;
-    "Clouds"|"Overcast")
+    "Clouds"|"Overcast"|"Mostly Cloudy")
         WEATHER=
         ;;
     "Rain")
