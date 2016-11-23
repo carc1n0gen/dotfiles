@@ -26,7 +26,4 @@ fi
 
 echo "$label $volume%"
 echo "$label $volume%"
-
-if [ "$status" != "on" ]; then
-	echo "#FFAE00"
-fi
+[ $status != "on" ] && echo "#FFAE00" || echo # Change color if muted

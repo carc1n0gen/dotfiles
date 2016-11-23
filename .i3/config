@@ -11,7 +11,8 @@
 
 
 # Look/feel
-new_window pixel 2
+#new_window pixel 10
+for_window [class="^.*"] border pixel 0
 
 
 # Keys
@@ -167,7 +168,9 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        #status_command i3status
+        #i3bar_command ~/.i3/lemonbar/i3_lemonbar.py
+
+	#status_command i3status
 	#status_command i3status | ./weather.py --wrap-i3-status --unit c 12773700
 	status_command i3blocks
 	#font pango:DejaVu Sans Mon, Icons, 12
@@ -205,6 +208,11 @@ bindsym $mod+m exec amixer -q sset Master toggle && pkill -RTMIN+1 i3blocks
 # Brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10%
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10%
+
+# ncmpcpp controls
+bindsym $mod+comma exec ncmpcpp prev
+bindsym $mod+period exec ncmpcpp next
+bindsym $mod+p exec ncmpcpp toggle
 
 # Launch Google Chrome
 bindsym $mod+Shift+w exec google-chrome
