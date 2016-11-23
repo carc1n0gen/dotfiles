@@ -35,6 +35,11 @@ W_DATA=$(curl -s "http://api.wunderground.com/api/$API_KEY/conditions/q/$LAT,$LO
 TEMP=$(echo $W_DATA | jq -r ".current_observation.temp_c")
 WEATHER=$(echo $W_DATA | jq -r ".current_observation.weather")
 
+if [ $TEMP = "null" ] || [ $WEATHER = "null" ]; then
+    echo "Weather API Error"
+    exit 33
+fi
+
 TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
     "Clear")
@@ -46,7 +51,7 @@ case $WEATHER in
     "Fog")
         WEATHER=
         ;;
-    "Clouds"|"Overcast"|"Mostly Cloudy")
+    "Clouds"|"Overcast"|"Mostly Cloudy"|"Scattered Clouds")
         WEATHER=
         ;;
     "Rain")
