@@ -40,7 +40,7 @@ if [ $TEMP = "null" ] || [ $WEATHER = "null" ]; then
     exit 33
 fi
 
-TODO: Show moon/sun versions of things depending on time of day
+# TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
     "Clear")
         WEATHER=
