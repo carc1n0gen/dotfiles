@@ -50,30 +50,31 @@ W_DATA=$(curl -s "https://api.darksky.net/forecast/$API_KEY/$LAT,$LONG?units=$UN
 TEMP=$(echo $W_DATA | jq -r ".currently.temperature")
 WEATHER=$(echo $W_DATA | jq -r ".currently.summary")
 
+if [ $TEMP = "null" ] || [ $WEATHER = "null" ]; then
+	echo "DarkSky API Error"
+	echo "DarkSky API Error"
+	echo "#FF0000"
+	exit 33
+fi
+
 # TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
     "Clear")
         ICON=
         ;;
-    "Fog")
+   *"Fog"*)
         ICON=
         ;;
-    "Partly Cloudy")
+    *"Cloud"*|*"Overcast"*)
         ICON=
         ;;
-    "Clouds"|"Overcast")
-        ICON=
-        ;;
-    "Breezy and Overcast")
-        ICON=
-        ;;
-    "Rain")
+    *"Rain"*)
         ICON=
         ;;
-    "Snow")
+    *"Snow"*)
         ICON=
         ;;
-    "Thunderstorm")
+    *"Thunderstorm"*)
         ICON=
         ;;
     *)
