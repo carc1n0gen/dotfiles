@@ -11,7 +11,7 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
-PATH=$PATH:/sbin
+PATH=$PATH:/sbin:~/.luarocks/bin
 
 . ~/.profile_private
 

@@ -47,6 +47,7 @@ CITY=$(echo $L_DATA | jq -r ".city")
 UNITS="ca"
 
 W_DATA=$(curl -s "https://api.darksky.net/forecast/$API_KEY/$LAT,$LONG?units=$UNITS")
+#W_DATA=$(curl -s "https://api.darksky.net/forecast/$API_KEY/$LAT,$LONG?units=$UNITS" | jq -r ".currently.temperature, .currently.summary")
 TEMP=$(echo $W_DATA | jq -r ".currently.temperature")
 WEATHER=$(echo $W_DATA | jq -r ".currently.summary")
 
@@ -59,24 +60,24 @@ fi
 
 # TODO: Show moon/sun versions of things depending on time of day
 case $WEATHER in
-    "Clear")
-        ICON=
-        ;;
-   *"Fog"*)
-        ICON=
-        ;;
-    *"Cloud"*|*"Overcast"*)
-        ICON=
-        ;;
-    *"Rain"*)
-        ICON=
-        ;;
-    *"Snow"*)
-        ICON=
-        ;;
-    *"Thunderstorm"*)
-        ICON=
-        ;;
+#     "Clear")
+#         ICON=
+#         ;;
+#    *"Fog"*)
+#         ICON=
+#         ;;
+#     *"Cloud"*|*"Overcast"*)
+#         ICON=
+#         ;;
+#     *"Rain"*)
+#         ICON=
+#         ;;
+#     *"Snow"*)
+#         ICON=
+#         ;;
+#     *"Thunderstorm"*)
+#         ICON=
+#         ;;
     *)
         ICON=$WEATHER
         ;;

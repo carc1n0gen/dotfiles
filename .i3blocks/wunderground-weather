@@ -54,6 +54,9 @@ case $WEATHER in
     "Clouds"|"Overcast"|"Mostly Cloudy"|"Scattered Clouds")
         WEATHER=
         ;;
+    "Partly Cloudy")
+        WEATHER=
+        ;;
     "Light Rain")
         WEATHER=
         ;;
