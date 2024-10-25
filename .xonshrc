@@ -1,0 +1,12 @@
+# XONSH WEBCONFIG START
+$XONSH_COLOR_STYLE = 'coffee'
+$PROMPT = '{YELLOW}{env_name}{RESET}{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE} {cwd}{branch_color}{curr_branch: {}}{RESET} {RED}{last_return_code_if_nonzero:[{BOLD_INTENSE_RED}{}{RED}] }{RESET}{BOLD_BLUE}{prompt_end}{RESET} '
+xontrib load coreutils
+# XONSH WEBCONFIG END
+
+$CURRENT_PATH = $PATH
+
+# Update the path
+$PATH = "~/.cargo/bin:$CURRENT_PATH"
+
+echo $(fortune -s | cowsay -f $(ls -1 /usr/share/cowsay/cows/ | sort -R | head -1) -n)
