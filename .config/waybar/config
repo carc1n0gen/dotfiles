@@ -1,12 +1,8 @@
-{
-    // "layer": "top", // Waybar at top layer
-    
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
-    
-    "height": 30, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    
-    "spacing": 4, // Gaps between modules (4px)
+[{
+	"position": "top",
+	
+    // "layer": "top", // Waybar at top layer   
+    "spacing": 8,
     // Choose the order of the modules
 
     // Load Modules
@@ -15,24 +11,47 @@
         "~/.config/waybar/modules.json"
     ],    
     "modules-left": [
+    	//"user",
     	"hyprland/workspaces",
         //"custom/appmenu",
         //"group/quicklinks",
         "hyprland/window"
     ],
-    "modules-center": [
-        "mpd"
-    ],
+    // "modules-center": [
+    //     "mpd"
+    // ],
     "modules-right": [
     	"idle_inhibitor",
         "pulseaudio", 
-        //"network",
-        "cpu", 
-        "memory", 
-        "keyboard-state", 
+        "network",
         "battery",
         "tray",
         "clock",
         "custom/exit"
     ]
-}
+},{
+	"position": "bottom",
+
+	"spacing": 8,
+
+	// Load Modules
+    "include": [
+        "~/.config/ml4w/settings/waybar-quicklinks.json",
+        "~/.config/waybar/modules.json"
+    ],  
+
+	"modules-left": [
+		"gamemode",
+		"custom/screenshot",
+		"cava"
+	],
+	"modules-center": [
+		"mpd",
+	],
+	"modules-right": [
+		"keyboard-state",
+		//"temperature",
+		"cpu",
+		"memory",
+	]
+}]

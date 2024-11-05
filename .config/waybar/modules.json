@@ -13,8 +13,8 @@
     "hyprland/workspaces" : {
         "on-click": "activate",
         "active-only": false,
-        "all-outputs": true,
-        "format": "{}",
+        "all-outputs": false,
+        "format": "",
         "format-icons": {
 			"urgent": "",
 			"active": "",
@@ -32,12 +32,11 @@
 
     // Hyprland Window
     "hyprland/window": {
+    	"format": "{}",
         "rewrite": {
-            "(.*) - Brave": "$1",
-            "(.*) - Chromium": "$1",
-            "(.*) - Brave Search": "$1",
-            "(.*) - Outlook": "$1",
-            "(.*) Microsoft Teams": "$1"
+            "(.*) Firefox": " $1",
+            ".*Discord (.*)": " $1",
+            "Steam": " Steam"
         },
         "separate-outputs": true
     },
@@ -63,22 +62,22 @@
     "keyboard-state": {
         "numlock": false,
         "capslock": true,
-        "format": "{name} {icon}",
+        "format": "{icon}",
         "format-icons": {
             "locked": "",
-            "unlocked": ""
+            "unlocked": ""
         }
     },
 
     // System tray
     "tray": {
-        // "icon-size": 21,
+        "icon-size": 21,
         "spacing": 10
     },
 
     // Clock
     "clock": {
-        "format": "{:%I:%M}",
+        "format": " {:%I:%M}",
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}",
@@ -95,16 +94,20 @@
         "tooltip": false
     },
 
+    "temperature": {
+    	"format": " {temperatureC}°"
+    },
+
     // CPU
     "cpu": {
-        "format": "/ C {usage}% ",
-        "on-click": "alacritty -e htop"
+        "format": " {usage}%",
+        "on-click": "kitty -e btop"
     },
 
     // Memory
     "memory": {
-        "format": "/ M {}% ",
-        "on-click": "alacritty -e htop"
+        "format": " {}%",
+        "on-click": "kitty -e btop"
     },
 
     // Harddisc space used
@@ -147,7 +150,7 @@
         "tooltip-format-ethernet": "  {ifname} ({ipaddr}/{cidr})",
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 50,
-        "on-click": "alacritty -e nmtui"
+        "on-click": "kitty -e nmtui"
     },
 
     // Battery
@@ -169,7 +172,7 @@
     // Pulseaudio
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{icon}  {volume}%",
+        "format": "{icon} {volume}%",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
@@ -199,9 +202,10 @@
 
     // Other
     "user": {
-        "format": "{user}",
+        "format": " {user}",
         "interval": 60,
         "icon": false,
+        "on-click": "wlogout -b 3",
     },
 
     // Idle Inhibator
@@ -248,4 +252,34 @@
         "on-scroll-up":"mpc volume +2",
         "on-scroll-down":"mpc volume -2"
 	},
+	"gamemode": {
+	    "format": "{glyph}",
+	    "format-alt": "{glyph} {count}",
+	    "glyph": "",
+	    "hide-not-running": false,
+	    "use-icon": true,
+	    "icon-name": "input-gaming-symbolic",
+	    "icon-spacing": 4,
+	    "icon-size": 20,
+	    "tooltip": true,
+	    "tooltip-format": "Games running: {count}"
+	},
+	"cava": {
+	    "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+	    "bars": 15,
+	    "bar_delimiter": 0,
+	    "method": "pipewire",
+	    "input_delay": 5,
+	    "sleep_timer": 10,
+	    //"hide_on_silence": true,
+	    // "actions": {
+	    // 	"on-click-right": "mode"
+	    // }
+	},
+	"custom/screenshot": {
+		"format": "",
+        "tooltip-format": "Take a screenshot",
+        "on-click": "hyprshot --freeze -m region",
+        "tooltip": false
+	}
 }

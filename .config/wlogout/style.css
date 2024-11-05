@@ -22,14 +22,14 @@ window {
 }
 
 button {
-    color: #FFFFFF;
+    color: #DC8ADD;
     font-size:20px;
 
     background-repeat: no-repeat;
     background-position: center;
     background-size: 25%;
     border-style: solid;
-    border: 3px solid #FFFFFF;
+    border: 3px solid #DC8ADD;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
@@ -39,6 +39,7 @@ button:active,
 button:hover {    
     color: #FFFFFF;
     border: 3px solid #FFFFFF;
+    background-color: transparent;
 }
 
 /* 
@@ -61,14 +62,14 @@ Buttons
 
 #suspend {
 	margin: 10px;
-        border-radius: 20px;
+    border-radius: 20px;
 	background-image: image(url("icons/suspend.png"));
 }
 
 #hibernate {
-        margin: 10px;
-        border-radius: 20px;
-        background-image: image(url("icons/hibernate.png"));
+	margin: 10px;
+	border-radius: 20px;
+	background-image: image(url("icons/hibernate.png"));
 }
 
 #shutdown {
