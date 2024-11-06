@@ -43,6 +43,8 @@
 	"modules-left": [
 		"gamemode",
 		"custom/screenshot",
+		//"group/media-controls",
+		"custom/colorpicker",
 		"cava"
 	],
 	"modules-center": [
