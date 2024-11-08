@@ -60,7 +60,7 @@ window {
     margin:                       0px; 
     color:                        #FFFFFF;
     border:                       @border-width;
-    border-color:                 #DC8ADD;
+    border-color:                 #CAA6F7;
     cursor:                       "default";
     transparency:                 "real";
     location:                     north;

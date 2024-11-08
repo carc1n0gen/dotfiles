@@ -71,8 +71,9 @@
 
     // System tray
     "tray": {
-        "icon-size": 21,
-        "spacing": 10
+        // "icon-size": 20,
+        "spacing": 10,
+        "show-passive-items": true
     },
 
     // Clock
@@ -100,13 +101,17 @@
 
     // CPU
     "cpu": {
-        "format": " {usage}%",
+        //"format": " {avg_frequency}GHz {usage}%",
+        "format": " {icon0} {icon1} {icon2} {icon3} {icon4} {icon5} {icon6} {icon7} {icon8} {icon9} {icon10} {icon11} {usage:>2}%",
+        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+        "interval": 2,
         "on-click": "kitty -e btop"
     },
 
     // Memory
     "memory": {
-        "format": " {}%",
+        // "format": " {}%",
+        "format": " {used:0.1f}G/{total:0.1f}G",
         "on-click": "kitty -e btop"
     },
 
@@ -143,11 +148,11 @@
     "network": {
         "format": "{ifname}",
         "format-wifi": "   {signalStrength}%",
-        "format-ethernet": "  {ipaddr}",
+        "format-ethernet": " {ipaddr}",
         "format-disconnected": "Not connected", //An empty format will hide the module.
         "tooltip-format": " {ifname} via {gwaddri}",
-        "tooltip-format-wifi": "   {essid} ({signalStrength}%)",
-        "tooltip-format-ethernet": "  {ifname} ({ipaddr}/{cidr})",
+        "tooltip-format-wifi": "  {essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": " {ifname} ({ipaddr}/{cidr})",
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 50,
         "on-click": "kitty -e nmtui"
@@ -222,6 +227,7 @@
     "mpd":{
     	"interval": 1,
         "format":"{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) {volume}%",
+        //"format":"{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) {volume}%",
         "format-disconnected":"Disconnected ",
         "format-stopped":" {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped",
         "unknown-tag":"N/A",
@@ -266,8 +272,8 @@
 	},
 	"cava": {
 	    "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
-	    "bars": 15,
-	    "bar_delimiter": 0,
+	    "bars": 10,
+	    "bar_delimiter": 32,
 	    "method": "pipewire",
 	    "input_delay": 5,
 	    "sleep_timer": 10,
@@ -284,7 +290,7 @@
 	},
 	"custom/mpd-prev": {
 		"format": " ",
-		"tooltip-format": "Previous song",
+		"tooltip": false,
 		"on-click": "mpc prev"
 	},
 	"custom/mpd-play-pause": {
@@ -302,6 +308,9 @@
 	"custom/ashuffle": {
 		"format": " ",
 		"tooltip": false,
+		"hide-empty-text": true,
+		"interval": 1,
+		"exec": "~/.config/waybar/scripts/ashuffle-status.sh",
 		"on-click": "killall ashuffle > /dev/null; mpc clear; ashuffle --queue-buffer 2"
 	},
 	"group/media-controls": {
@@ -314,3 +323,4 @@
 		]
 	}
 }
+

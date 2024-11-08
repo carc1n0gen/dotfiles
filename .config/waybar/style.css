@@ -10,11 +10,11 @@
 }
 
 #waybar.top {
-	border-bottom: 3px solid #DC8ADD;
+	border-bottom: 3px solid #CAA6F7;
 }
 
 #waybar.bottom {
-	border-top: 3px solid #DC8ADD;
+	border-top: 3px solid #CAA6F7;
 }
 
 .modules-left,
@@ -100,11 +100,11 @@
 
 #workspaces button.active {
 	padding: 0 1rem;
-	background-color: #F5C2E7;
+	background-color: #CAA6F7;
 }
 
 #window {
-	color: #F5C2E7;
+	color: #CAA6F7;
 }
 
 window#waybar.empty #window {
