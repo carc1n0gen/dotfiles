@@ -3,10 +3,10 @@
 }
 
 #waybar {
-	background-color: #11111B;
+	background-color: #1e1e2e;
+	color: #cdd6f4;
 	font-family: "Inter Variable";
-	font-size: 16px;
-	/* box-shadow: 4px 4px 2px 1px #101010; */
+	font-size: 14px;
 }
 
 #waybar.top {
@@ -59,7 +59,7 @@
 #media-controls,
 #cava {
 	border-radius: 6px;
-	background-color: #242438;
+	background-color: #313244;
 }
 
 #user,
@@ -95,7 +95,7 @@
 #workspaces button {
 	padding: 0 0.25em;
 	margin:  0.5rem;
-	background-color: #F2CDCD;
+	background-color: #cdd6f4;
 }
 
 #workspaces button.active {
@@ -103,44 +103,44 @@
 	background-color: #CAA6F7;
 }
 
-#window {
-	color: #CAA6F7;
-}
-
-window#waybar.empty #window {
+#waybar.empty #window {
     background-color: transparent;
 }
 
-#mpd {
-	color: #B4BEFE
-}
-
 #idle_inhibitor {
-	color: #A5E2A0;
 	font-weight: bold;
 }
-
-#pulseaudio {
-	color: #EBA0AC;
+#idle_inhibitor.activated {
+	color: #A6E3A1;
 }
 
-#network {
-	color: #CBA6F7;
+#pulseaudio.muted,
+#pulseaudio.source-muted {
+	color: #fab387;
 }
 
-#tray {
-	
+#network.disconnected {
+	color: #fab387;
 }
 
-#clock {
-	color: #F5C2E7;	
+#cpu.medium,
+#memory.medium {
+	color: #94e2d5;
+}
+#cpu.warning,
+#memory.warning {
+	color: #f9e2af;
+}
+#cpu.critical,
+#memory.critical {
+	color: #f38ba8;
 }
 
 #keyboard-state {
 	margin: 0;
 	padding: 0;
 	background-color: transparent;
-	color: #CBA6F7;
+	color: #A6E3A1;
 }
 
 #keyboard-state label.capslock.locked {
@@ -149,47 +149,9 @@ window#waybar.empty #window {
 	border-radius: 6px;
 }
 
-#temperature {
-	color: #F8B186;
-}
-
-#temperature.critical {
-	color: #F38BA7;
-}
-
-#cpu {
-	color: #E99EAB;
-}
-
-#memory {
-	color: #F9E2AE;
-}
-
-#custom-exit {
-	color: #F38BA7;
-}
-
 #gamemode {
 	padding-right: 0.25em;
-	color: #F8B186;
 }
 #gamemode.running {
-	color: #A5E2A0;
-}
-
-
-#custom-screenshot {
-	color: #89DBEB;
-}
-
-#custom-colorpicker {
-	color: #A6E2A1;
-}
-
-#media-controls {
-	color: #B4BEFE;
-}
-
-#cava {
-	color: #F5C2E7;
+	color: #A6E3A1;
 }

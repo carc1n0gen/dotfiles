@@ -78,10 +78,9 @@
 
     // Clock
     "clock": {
-        "format": " {:%I:%M}",
-        // "timezone": "America/New_York",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}",
+        "format": " {:%B, %d - %I:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        // "format-alt": "{:%Y-%m-%d}",
         "calendar": {
         	"format": {
         		"today": "<span color=\"white\" bgcolor=\"black\"><b>{}</b></span>"
@@ -101,18 +100,26 @@
 
     // CPU
     "cpu": {
-        //"format": " {avg_frequency}GHz {usage}%",
         "format": " {icon0} {icon1} {icon2} {icon3} {icon4} {icon5} {icon6} {icon7} {icon8} {icon9} {icon10} {icon11} {usage:>2}%",
         "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
         "interval": 2,
+        "states": {
+	      	"medium": 50,
+	      	"warning": 70,
+	      	"critical": 90
+	    },
         "on-click": "kitty -e btop"
     },
 
     // Memory
     "memory": {
-        // "format": " {}%",
         "format": " {used:0.1f}G/{total:0.1f}G",
-        "on-click": "kitty -e btop"
+        "on-click": "kitty -e btop",
+        "states": {
+        	"medium": 50,
+        	"warning": 70,
+        	"critical": 90
+        }
     },
 
     // Harddisc space used

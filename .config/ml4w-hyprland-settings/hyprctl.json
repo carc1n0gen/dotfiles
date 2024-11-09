@@ -10,5 +10,9 @@
     {
         "key": "decoration:drop_shadow",
         "value": false
+    },
+    {
+        "key": "general:col.inactive_border",
+        "value": "rgb(313244)"
     }
 ]
