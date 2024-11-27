@@ -14,5 +14,9 @@
     {
         "key": "general:col.inactive_border",
         "value": "rgb(313244)"
+    },
+    {
+        "key": "general:gaps_out",
+        "value": 15
     }
 ]
