@@ -10,6 +10,12 @@ your target directory.
 
 ```
 dotfiles/
+├── cowsay/
+│   ├── .local/
+│   │   └── share/
+│   │       └── cowsay/
+│   │           └── cows/
+│   │               └── fish.cow
 ├── fish/
 │   ├── .config/
 │   │   └── fish/
@@ -27,7 +33,8 @@ dotfiles/
 
 ## Installation
 
-To install these dotfiles, you can use the following command:
+To install everything you can clone the repository to your home directory and
+run `stow` from the cloned directory:
 
 ```bash
 git clone https://github.com/carc1n0gen/dotfiles.git ~/.dotfiles
