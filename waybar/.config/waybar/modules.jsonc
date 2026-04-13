@@ -1,0 +1,144 @@
+{
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+  },
+  "battery": {
+    "states": {
+      "full": 100,
+      "high": 75,
+      "medium": 50,
+      "low": 25,
+      "critical": 10,
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄",
+    "format-plugged": "󰚥",
+    "format-alt": "{icon}",
+    "format-icons": ["󰂃", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": " {:%b %d %Y}",
+    "format": "󰥔 {:%I:%M %p}",
+  },
+  "cpu": {
+    "format": " {usage}%",
+    "states": {
+      "low": 0,
+      "medium": 30,
+      "high": 50,
+      "critical": 80,
+    },
+    "interval": 2,
+  },
+  "custom/lock": {
+    "tooltip": false,
+    "on-click": "sh -c '(sleep 0.5s; swaylock --grace 0)' & disown",
+    "format": "",
+  },
+  "custom/meteobar": {
+    "format": "{}",
+    "tooltip": true,
+    "restart-interval": 3600,
+    "exec": "~/.local/bin/meteobar --ampm --shown-hours=8 --date-format=\"%b %d\"",
+    "return-type": "json",
+  },
+  "custom/music": {
+    "format": "󰝚 {}",
+    "escape": true,
+    "interval": 5,
+    "tooltip": false,
+    "exec": "playerctl metadata --format='{{ title }}'",
+    "on-click": "playerctl play-pause",
+    // "max-length": 50,
+  },
+  "custom/power": {
+    "tooltip": false,
+    "on-click": "wlogout &",
+    "format": "⏼",
+  },
+  "custom/screenshot": {
+    "format": "󰄀",
+    "tooltip": "Take a screenshot",
+    "on-click": "sh -c 'grim -g \"$(slurp)\" - | wl-copy'",
+  },
+  "hyprland/window": {
+    "format": "{}",
+  },
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "sort-by-name": true,
+    "format": " {icon} ",
+    "format-icons": {
+      "default": "",
+    },
+    "persistent-workspaces": {
+      "*": [1, 2, 3, 4, 5, 6],
+    },
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰅶",
+      "deactivated": "󰛊",
+    },
+    "timeout": 30.5,
+  },
+  "memory": {
+    "format": " {}%",
+    "states": {
+      "low": 0,
+      "medium": 30,
+      "high": 50,
+      "critical": 80,
+    },
+    "interval": 2,
+  },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "󰈸",
+      "balanced": "",
+      "power-saver": "󰌪",
+    },
+    // "on-click": "~/.config/waybar/scripts/toggle-power-profile.sh",
+  },
+  "pulseaudio": {
+    // "scroll-step": 1, // %, can be a float
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "default": ["", "", ""],
+    },
+    "on-click": "pavucontrol",
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10,
+  },
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󰂚<span foreground='red'><sup></sup></span>",
+      "none": "󰂚",
+      "dnd-notification": "󰂛<span foreground='red'><sup></sup></span>",
+      "dnd-none": "󰂛",
+      "inhibited-notification": "󰂚<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "󰂚",
+      "dnd-inhibited-notification": "󰂛<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": "󰂛",
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true,
+  },
+}

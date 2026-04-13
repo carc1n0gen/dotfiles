@@ -1,0 +1,12 @@
+##
+## A simple fish simply swimming and minding its own business
+##
+$the_cow = <<EOC;
+     $thoughts
+      $thoughts  /\\
+         \\.\\_
+\\`-\\..:-`    `-.
+ )  _       ( o :
+/.-` ;--,....-"`
+          `'
+EOC

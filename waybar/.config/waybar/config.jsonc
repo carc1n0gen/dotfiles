@@ -1,0 +1,55 @@
+[
+  {
+    "layer": "top",
+    "position": "top",
+    "include": ["~/.config/waybar/modules.jsonc"],
+    "modules-left": ["group/group-workspaces"],
+    "modules-center": ["group/group-windows"],
+    "modules-right": ["group/group-system"],
+    "group/group-workspaces": {
+      "orientation": "horizontal",
+      "modules": ["hyprland/workspaces"],
+    },
+    "group/group-windows": {
+      "orientation": "horizontal",
+      "modules": ["hyprland/window"],
+    },
+    "group/group-system": {
+      "orientation": "horizontal",
+      "modules": [
+        "tray",
+        "custom/meteobar",
+        "pulseaudio",
+        "backlight",
+        "battery",
+        "clock",
+        "custom/notification",
+        "custom/power",
+      ],
+    },
+  },
+  {
+    "layer": "top",
+    "position": "bottom",
+    "include": ["~/.config/waybar/modules.jsonc"],
+    "modules-left": ["group/group-utils"],
+    "modules-center": ["group/group-media"],
+    "modules-right": ["group/group-resources"],
+    "group/group-utils": {
+      "orientation": "horizontal",
+      "modules": [
+        "idle_inhibitor",
+        "power-profiles-daemon",
+        "custom/screenshot",
+      ],
+    },
+    "group/group-media": {
+      "orientation": "horizontal",
+      "modules": ["custom/music"],
+    },
+    "group/group-resources": {
+      "orientation": "horizontal",
+      "modules": ["memory", "cpu"],
+    },
+  },
+]

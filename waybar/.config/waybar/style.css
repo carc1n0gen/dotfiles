@@ -1,0 +1,260 @@
+@import "gruvbox.css";
+
+@define-color waybar-bg transparent;
+@define-color section-bg @dark1;
+@define-color section-border @gray;
+@define-color fg @light0;
+
+@define-color danger @bright_red;
+@define-color warning @bright_orange;
+@define-color success @bright_aqua;
+
+@define-color workspace-fg @bright_blue;
+@define-color workspace-fg-active @neutral_blue;
+@define-color workspace-bg-active @dark0;
+
+* {
+    font-family: "Noto Sans Mono", "NotoSans Nerd Font";
+    font-size: 16px;
+    /*min-height: 0;*/
+}
+
+#waybar {
+    background: @waybar-bg;
+    color: @fg;
+}
+
+#waybar > box {
+    margin: 10px;
+}
+
+tooltip {
+    border-radius: 6px;
+    border: 2px solid @section-border;
+    background-color: @section-bg;
+}
+
+tooltip box {
+    padding: 10px;
+}
+
+tooltip label {
+    color: @fg;
+}
+
+/* Groups */
+
+/* maybe some day waybar css will support the starts with selector so I can
+   simply do [id^="group-"] to style them all at once */
+
+#group-media,
+#group-resources,
+#group-system,
+#group-utils,
+#group-workspaces,
+#group-windows {
+    background-color: @section-bg;
+    border-radius: 1rem;
+    border: 2px solid @section-border;
+}
+
+#group-media > * > *,
+#group-resources > * > *,
+#group-system > * > *,
+#group-utils > * > *,
+/*#group-workspaces > * > *,*/ /* workspaces manages it's own padding */
+#group-windows > * > * {
+    padding: 0.5rem 1rem;
+}
+
+window#waybar.empty #group-windows {
+    background: none;
+    border-color: transparent;
+}
+
+/* Modules */
+
+#backlight,
+#battery {
+    border-radius: 0;
+}
+
+#backlight {
+    color: @neutral_yellow;
+}
+
+/*#battery {
+
+}*/
+
+#battery.charging {
+    color: @bright_blue;
+}
+
+#battery.full {
+    color: @success;
+}
+
+#battery.high {
+    color: @success;
+}
+
+#battery.medium {
+    color: @bright_yellow;
+}
+
+#battery.low {
+    color: @warning;
+}
+
+#battery.critical:not(.charging) {
+    color: @danger;
+}
+
+#clock {
+    color: @bright_blue;
+}
+
+/*#cpu {
+
+}*/
+
+#cpu.low {
+    color: @bright_aqua;
+}
+
+#cpu.medium {
+    color: @bright_yellow;
+}
+
+#cpu.high {
+    color: @bright_orange;
+}
+
+#cpu.critical {
+    color: @bright_red;
+}
+
+#custom-lock {
+    border-radius: 1rem 0px 0px 1rem;
+    color: @lavender;
+}
+
+/*#custom-meteobar {
+
+}*/
+
+#custom-meteobar.clear_sky {
+    color: @bright_yellow;
+}
+
+#custom-meteobar.overcast {
+    color: @light3;
+}
+
+/*#custom-music {
+
+}*/
+
+#custom-notification {
+    color: @faded_yellow;
+}
+
+#custom-notification.notification {
+    color: @bright_yellow;
+}
+
+#custom-power {
+    color: @bright_red;
+}
+
+#custom-screenshot {
+    color: @neutral_aqua;
+}
+
+#group-windows {
+    margin: 0 10px;
+}
+
+/*#idle_inhibitor {
+
+}*/
+
+#idle_inhibitor.activated {
+    color: @bright_aqua;
+}
+
+/*#memory {
+
+}*/
+
+#memory.low {
+    color: @bright_aqua;
+}
+
+#memory.medium {
+    color: @bright_yellow;
+}
+
+#memory.high {
+    color: @bright_orange;
+}
+
+#memory.critical {
+    color: @bright_red;
+}
+
+/*#power-profiles-daemon {
+
+}*/
+
+#power-profiles-daemon.power-saver {
+    color: @bright_aqua;
+}
+
+#power-profiles-daemon.balanced {
+    color: @bright_yellow;
+}
+
+#power-profiles-daemon.performance {
+    color: @bright_red;
+}
+
+/*#tray {
+
+}*/
+
+#pulseaudio {
+    color: @bright_green;
+}
+
+#pulseaudio.muted {
+    color: @danger;
+}
+
+#window {
+    /* fix for emojis/unicode symbols changing rendered height */
+    margin-top: -50px;
+    margin-bottom: -50px;
+}
+
+/*#workspaces {
+
+}*/
+
+#workspaces button {
+    color: @workspace-fg;
+    border-radius: 1rem;
+    padding: 0.4rem;
+}
+
+#workspaces button.active {
+    color: @workspace-fg-active;
+    border-radius: 1rem;
+}
+
+#workspaces button:hover {
+    background-color: @workspace-bg-active;
+    border-radius: 1rem;
+    border-color: transparent;
+}
