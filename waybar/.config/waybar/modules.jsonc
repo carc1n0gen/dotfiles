@@ -61,16 +61,14 @@
     "glyph": "󰊴",
     "hide-not-running": false,
     "use-icon": false,
-    // "format-icons": {
-    //   "default": "󰈸",
-    //   "active": "󰈸<span foreground='green'><sup></sup></span>",
-    // },
   },
   "hyprland/window": {
     "format": "{}",
     "rewrite": {
       "(.*) - Discord": "<span color=\"cornflowerblue\"></span> $1",
       "(.*) — Mozilla Firefox": "<span color=\"orangered\">󰈹</span> $1", // Note the em dash
+      "(~.*)": " $1",
+      "(.*) (~.*)": " $1 $2",
     },
   },
   "hyprland/workspaces": {
