@@ -152,6 +152,10 @@ window#waybar.empty #group-windows {
     color: @light3;
 }
 
+#custom-meteobar.light_drizzle {
+    color: @bright_blue;
+}
+
 /*#custom-music {
 
 }*/
