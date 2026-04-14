@@ -68,6 +68,10 @@
   },
   "hyprland/window": {
     "format": "{}",
+    "rewrite": {
+      "(.*) - Discord": "<span color=\"cornflowerblue\"></span> $1",
+      "(.*) — Mozilla Firefox": "<span color=\"orangered\">󰈹</span> $1", // Note the em dash
+    },
   },
   "hyprland/workspaces": {
     "disable-scroll": true,
