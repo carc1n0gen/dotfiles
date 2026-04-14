@@ -55,6 +55,17 @@
     "tooltip": "Take a screenshot",
     "on-click": "sh -c 'grim -g \"$(slurp)\" - | wl-copy'",
   },
+  "gamemode": {
+    "format": "{glyph}",
+    "format-alt": "{glyph} {count}",
+    "glyph": "󰊴",
+    "hide-not-running": false,
+    "use-icon": false,
+    // "format-icons": {
+    //   "default": "󰈸",
+    //   "active": "󰈸<span foreground='green'><sup></sup></span>",
+    // },
+  },
   "hyprland/window": {
     "format": "{}",
   },
