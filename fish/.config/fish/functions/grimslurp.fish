@@ -1,28 +1,39 @@
 #
-# Take a screenshot using grim and slup. Saves image to ~/Pictures/Screenshots
+# Take a screenshot using grim and slurp. Saves image to ~/Pictures/Screenshots
 # with a timestamped filename, and copies it to the clipboard using wl-copy.
-# If the function is run in an interactive shell, it will print a message to
-# the terminal. If run in a non-interactive shell, it will send a desktop
-# notification.
+# If run in an interactive shell, prints a message to the terminal.
+# If run in a non-interactive shell, sends a desktop notification.
 #
 # TODO: add command args for whether to save, and timestamp format.
-# TODO: maybe check for notify-send, though it should always be available
 #
 function grimslurp
-    set -l message ""
-    set -l image_path ""
-    set -l date_fmt (set -q SCREENSHOT_DATE_FORMAT; and echo $SCREENSHOT_DATE_FORMAT; or echo "%FT%T")
-    if command -q grim && command -q slurp && command -q wl-copy
-        set image_path ~/Pictures/Screenshots/(date +$date_fmt).png
-        grim -g (slurp) $image_path && wl-copy < $image_path
-        set message "Imaged saved to $image_path and copied to clipboard."
-    else
-        set message "grim, slurp, and wl-copy are required for grimslurp to work."
+    if not command -q grim; or not command -q slurp; or not command -q wl-copy
+        set -l missing "grim, slurp, and wl-copy are required for grimslurp to work."
+        if status is-interactive
+            echo $missing
+        else
+            notify-send "grimslurp" "$missing" -a "Screenshot"
+        end
+        return 1
     end
 
-    if status is-interactive
-        echo $message
+    set -l date_fmt (set -q SCREENSHOT_DATE_FORMAT; and echo $SCREENSHOT_DATE_FORMAT; or echo "%FT%T")
+    set -l image_path ~/Pictures/Screenshots/(date +$date_fmt).png
+
+    grim -g (slurp) $image_path
+
+    if test $status -eq 0
+        wl-copy < $image_path
+        if status is-interactive
+            echo "Image saved to $image_path and copied to clipboard."
+        else
+            notify-send "Screenshot saved" "Saved to $image_path and copied to clipboard." -i "$image_path" -a "Screenshot"
+        end
     else
-        notify-send "Screenshot saved" "$message" -i "$image_path" -a "Screenshot"
+        if status is-interactive
+            return 0 # No need to echo, as the commands already echo when you cancel
+        else
+            notify-send "Screenshot canceled" -a "Screenshot"
+        end
     end
 end
