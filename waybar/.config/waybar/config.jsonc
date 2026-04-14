@@ -45,7 +45,8 @@
     },
     "group/group-media": {
       "orientation": "horizontal",
-      "modules": ["custom/music"],
+      // "modules": ["custom/music"],
+      "modules": ["mpris"],
     },
     "group/group-resources": {
       "orientation": "horizontal",

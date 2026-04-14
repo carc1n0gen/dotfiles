@@ -45,15 +45,6 @@
     "exec": "~/.local/bin/meteobar --ampm --shown-hours=8 --date-format=\"%b %d\"",
     "return-type": "json",
   },
-  "custom/music": {
-    "format": "󰝚 {}",
-    "escape": true,
-    "interval": 5,
-    "tooltip": false,
-    "exec": "playerctl metadata --format='{{ title }}'",
-    "on-click": "playerctl play-pause",
-    // "max-length": 50,
-  },
   "custom/power": {
     "tooltip": false,
     "on-click": "wlogout &",
@@ -95,6 +86,20 @@
       "critical": 80,
     },
     "interval": 2,
+  },
+  "mpris": {
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "player-icons": {
+      "default": "",
+      "mpv": "󰕧",
+      "firefox": "<span color=\"orangered\">󰈹</span>",
+      "vlc": "<span color=\"orange\">󰕼</span>",
+    },
+    "status-icons": {
+      "paused": "󰏤",
+    },
+    // "ignored-players": ["firefox"]
   },
   "power-profiles-daemon": {
     "format": "{icon}",
