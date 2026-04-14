@@ -16,7 +16,6 @@
 * {
     font-family: "Noto Sans Mono", "NotoSans Nerd Font";
     font-size: 16px;
-    /*min-height: 0;*/
 }
 
 #waybar {
@@ -24,17 +23,23 @@
     color: @fg;
 }
 
-#waybar > box {
-    margin: 10px;
-}
+/*#waybar > box {
+
+}*/
 
 tooltip {
-    border-radius: 6px;
-    border: 2px solid @section-border;
-    background-color: @section-bg;
+    border: none;
+    background: transparent;
+}
+
+tooltip decoration {
+    box-shadow: none;
 }
 
 tooltip box {
+    border-radius: 10px;
+    border: 2px solid @section-border;
+    background-color: @section-bg;
     padding: 10px;
 }
 
@@ -54,7 +59,7 @@ tooltip label {
 #group-workspaces,
 #group-windows {
     background-color: @section-bg;
-    border-radius: 1rem;
+    border-radius: 10px;
     border: 2px solid @section-border;
 }
 
