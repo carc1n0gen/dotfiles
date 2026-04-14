@@ -39,6 +39,7 @@
       "orientation": "horizontal",
       "modules": [
         "idle_inhibitor",
+        "gamemode",
         "power-profiles-daemon",
         "custom/screenshot",
       ],

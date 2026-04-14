@@ -169,7 +169,15 @@ window#waybar.empty #group-windows {
 }
 
 #custom-screenshot {
-    color: @neutral_aqua;
+    color: @bright_blue;
+}
+
+/*#gamemode {
+
+}*/
+
+#gamemode.running {
+    color: @bright_aqua;
 }
 
 #group-windows {
