@@ -1,32 +1,38 @@
 #
-# Emoji picker using fuzzel in dmenu mode.
+# Emoji picker using a dmenu-compatible menu tool.
 # On first run, downloads emoji data from unicode.org and caches it locally.
 # Presents a searchable list of emojis with their names, and copies the
 # selected emoji to the clipboard using wl-copy.
 #
-# Usage: fishmoji [-c | --clip] [-t | --type]
-#   -c, --clip   Copy the selected emoji to the clipboard using wl-copy (default)
-#   -t, --type   Type the selected emoji using wtype
+# Usage: fishmoji [-c | --clip] [-t | --type] [-m | --menu <tool>] [-h | --help]
+#   -c, --clip         Copy the selected emoji to the clipboard using wl-copy (default)
+#   -t, --type         Type the selected emoji using wtype
+#   -m, --menu <tool>  Use a specific menu tool (fuzzel, rofi, wofi)
+#   -h, --help         Show this help message
 #
-# Requires: fuzzel, curl, wl-copy
+# Requires: curl, wl-copy
+# Supported menu tools: fuzzel, rofi, wofi (first found in this order is used)
 # Optional: wtype (for --type)
 #
 function fishmoji
-    argparse 'h/help' 'c/clip' 't/type' -- $argv
+    argparse 'h/help' 'c/clip' 't/type' 'm/menu=' -- $argv
     or return 1
 
     if set -q _flag_help
-        echo "Usage: fishmoji [-c | --clip] [-t | --type] [-h | --help]"
+        echo "Usage: fishmoji [-c | --clip] [-t | --type] [-m | --menu <tool>] [-h | --help]"
         echo ""
-        echo "An emoji picker using fuzzel. On first run, downloads emoji data from"
-        echo "unicode.org and caches it locally. Recently used emojis appear at the top."
+        echo "An emoji picker using a dmenu-compatible menu tool. On first run, downloads"
+        echo "emoji data from unicode.org and caches it locally. Recently used emojis"
+        echo "appear at the top."
         echo ""
         echo "Options:"
-        echo "  -c, --clip   Copy the selected emoji to the clipboard using wl-copy (default)"
-        echo "  -t, --type   Type the selected emoji using wtype"
-        echo "  -h, --help   Show this help message"
+        echo "  -c, --clip         Copy the selected emoji to the clipboard using wl-copy (default)"
+        echo "  -t, --type         Type the selected emoji using wtype"
+        echo "  -m, --menu <tool>  Use a specific menu tool (fuzzel, rofi, wofi)"
+        echo "  -h, --help         Show this help message"
         echo ""
-        echo "Requires: fuzzel, curl, wl-copy"
+        echo "Requires: curl, wl-copy"
+        echo "Supported menu tools: fuzzel, rofi, wofi (first found in this order is used)"
         echo "Optional: wtype (for --type)"
         return 0
     end
@@ -36,10 +42,37 @@ function fishmoji
         set _flag_clip true
     end
 
-    set -l cache_dir (test -n "$XDG_DATA_HOME"; and echo "$XDG_DATA_HOME"; or echo "$HOME/.local/share")/fishmoji
-    set -l cache_file $cache_dir/emojis.txt
-    set -l history_dir (test -n "$XDG_STATE_HOME"; and echo "$XDG_STATE_HOME"; or echo "$HOME/.local/state")/fishmoji
-    set -l history_file $history_dir/history.txt
+    # Determine menu tool
+    set -l menu_tool
+    if set -q _flag_menu
+        set menu_tool $_flag_menu
+    else
+        for tool in fuzzel rofi wofi
+            if command -q $tool
+                set menu_tool $tool
+                break
+            end
+        end
+    end
+
+    if test -z "$menu_tool"
+        echo "fishmoji: no supported menu tool found (fuzzel, rofi, wofi)"
+        return 1
+    end
+
+    # Build menu command for the selected tool
+    set -l menu_cmd
+    switch $menu_tool
+        case fuzzel
+            set menu_cmd fuzzel --dmenu --prompt "  "
+        case rofi
+            set menu_cmd rofi -dmenu -p "  " -i
+        case wofi
+            set menu_cmd wofi --show dmenu -p "  " -i
+        case '*'
+            echo "fishmoji: unsupported menu tool: $menu_tool"
+            return 1
+    end
 
     if not command -q curl
         echo "fishmoji: curl is required"
@@ -56,6 +89,10 @@ function fishmoji
         return 1
     end
 
+    set -l cache_dir (test -n "$XDG_DATA_HOME"; and echo "$XDG_DATA_HOME"; or echo "$HOME/.local/share")/fishmoji
+    set -l cache_file $cache_dir/emojis.txt
+    set -l history_dir (test -n "$XDG_STATE_HOME"; and echo "$XDG_STATE_HOME"; or echo "$HOME/.local/state")/fishmoji
+    set -l history_file $history_dir/history.txt
 
     if not test -f $cache_file
         echo "fishmoji: downloading emoji data from unicode.org..."
@@ -77,10 +114,10 @@ function fishmoji
                 sort $history_file | uniq -c | sort -rn | sed 's/^ *[0-9]* //'
                 cat $cache_file
             end | cat -n | sort -uk2 | sort -n | cut -f2- \
-            | fuzzel --dmenu --prompt "  "
+            | $menu_cmd
         )
     else
-        set selection (fuzzel --dmenu --prompt "  " < $cache_file)
+        set selection ($menu_cmd < $cache_file)
     end
 
     if test -z "$selection"
