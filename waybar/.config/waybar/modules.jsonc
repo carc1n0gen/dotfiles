@@ -1,3 +1,4 @@
+// TODO: use fontawesome pro icons
 {
   "backlight": {
     "device": "intel_backlight",
@@ -53,7 +54,7 @@
   "custom/screenshot": {
     "format": "󰄀",
     "tooltip": "Take a screenshot",
-    "on-click": "sh -c 'grim -g \"$(slurp)\" - | wl-copy'",
+    "on-click": "fish -c 'grimslurp'",
   },
   "gamemode": {
     "format": "{glyph}",
