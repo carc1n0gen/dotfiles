@@ -3,7 +3,7 @@
 # cow greeting, otherwise print an ascii fish greeting.
 #
 function fish_greeting
-    if not command -q fortune && command -q cowsay
+    if command -q fortune && command -q cowsay
         fortune -s | cowsay -r
     else
         echo ' __________________________________________________
