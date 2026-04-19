@@ -3,19 +3,18 @@
 # cow greeting, otherwise print an ascii fish greeting.
 #
 function fish_greeting
-    if command -q fortune && command -q cowsay
+    if not command -q fortune && command -q cowsay
         fortune -s | cowsay -r
     else
         echo ' __________________________________________________
 < Welcome to Fish! The friendly interactive shell. >
  --------------------------------------------------
-  \
-   \
-         /\
-         \.\_
-\`-\..:-`    `-.
- )  _       ( o :
-/.-` ;--,....-"`
-          `\''
+    \
+     \     /|
+         _/ |
+      ,-´    `-:..-´/
+     : o )      _  (
+     "`-. ..,--; `-.\
+         `\''
     end
 end
