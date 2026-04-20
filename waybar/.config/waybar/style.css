@@ -52,7 +52,12 @@ tooltip label {
 /* maybe some day waybar css will support the starts with selector so I can
    simply do [id^="group-"] to style them all at once */
 
-#group-media,
+/* due to how mpris state/classes are applies, we cannot show/hide the section
+   section containing it, only the mpris module itself. So mpris handles it's
+   own background and border styling so it can be hidden when nothing is
+   playing */
+
+/*#group-media,*/
 #group-resources,
 #group-system,
 #group-utils,
@@ -63,7 +68,7 @@ tooltip label {
     border: 2px solid @section-border;
 }
 
-#group-media > * > *,
+/*#group-media > * > *,*/
 #group-resources > * > *,
 #group-system > * > *,
 #group-utils > * > *,
@@ -219,6 +224,25 @@ window#waybar.empty #group-windows {
 
 #memory.critical {
     color: @bright_red;
+}
+
+#mpris {
+    background-color: @section-bg;
+    border-radius: 10px;
+    border: 2px solid @section-border;
+    padding: 0.5rem 1rem;
+}
+
+#mpris.playing {
+    color: @bright_aqua;
+}
+
+#mpris.paused {
+    color: @bright_blue;
+}
+
+#mpris:not(.playing):not(.paused) {
+    border-color: transparent;
 }
 
 /*#power-profiles-daemon {
