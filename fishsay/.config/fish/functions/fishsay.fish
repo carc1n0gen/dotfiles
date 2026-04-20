@@ -54,15 +54,12 @@ function fishsay
     set -l message
     if test (count $argv) -gt 0
         set message (string join ' ' $argv)
-    else if not isatty stdin
+    else
         set -l stdin_lines
-        while read -l line
+        while read -l -p '' line
             set -a stdin_lines $line
         end
         set message (string join ' ' $stdin_lines)
-    else
-        echo "fishsay: no message provided. Try: fishsay 'hello!'" >&2
-        return 1
     end
 
     # Wrap width
