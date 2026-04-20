@@ -20,6 +20,9 @@ dotfiles/
 │   ├── .config/
 │   │   └── fish/
 │   │       └── config.fish
+|   |       └── functions/
+|   |           └── fish_prompt.fish
+|   |           └── fish_greeting.fish
 ├── hypr/
 │   ├── .config/
 │   │   └── hypr/
@@ -39,7 +42,7 @@ run `stow` from the cloned directory:
 ```bash
 git clone https://github.com/carc1n0gen/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-stow *
+stow */
 ```
 
 Or to install specific dotfiles, you can use:
@@ -57,7 +60,7 @@ the dotfiles directory with flags to override these defaults. For example:
 
 ```bash
 git clone https://github.com/carc1n0gen/dotfiles.git ~/My/Custom/Dir/Dotfiles
-stow -d ~/My/Custom/Dir/Dotfiles -t ~ *
+stow -d ~/My/Custom/Dir/Dotfiles -t ~ */
 ```
 
 Or again for a single package
