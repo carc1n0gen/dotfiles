@@ -6,24 +6,44 @@
 function fishfetch
     # ── Gather System Info ──────────────────────────────────────────────
 
-    set -l os_type (uname -s)
+    # Parse uname once: "Linux hostname 6.x.x x86_64" or "Darwin hostname 24.x.x arm64"
+    set -l uname_parts (string split ' ' (uname -snrm))
+    set -l os_type $uname_parts[1]
+    set -l uname_nodename $uname_parts[2]
+    set -l uname_release $uname_parts[3]
+    set -l uname_machine $uname_parts[4]
     set -l info_lines
 
-    # Fire slow macOS queries in parallel (system_profiler is ~700ms sequential)
+    # Fire slow queries in parallel
     set -l _ff_tmpdir ""
     set -l _ff_hw_pid ""
     set -l _ff_dp_pid ""
+    set -l _ff_lspci_pid ""
+    set -l _ff_df_pid ""
     if test "$os_type" = Darwin; and command -q system_profiler
         set _ff_tmpdir (mktemp -d)
         system_profiler SPHardwareDataType >$_ff_tmpdir/hw 2>/dev/null &
         set _ff_hw_pid $last_pid
         system_profiler SPDisplaysDataType >$_ff_tmpdir/dp 2>/dev/null &
         set _ff_dp_pid $last_pid
+    else if test "$os_type" = Linux
+        set _ff_tmpdir (mktemp -d)
+        if command -q lspci
+            lspci >$_ff_tmpdir/lspci 2>/dev/null &
+            set _ff_lspci_pid $last_pid
+        end
+        df -h / >$_ff_tmpdir/df 2>/dev/null &
+        set _ff_df_pid $last_pid
     end
 
     # Title: user@hostname
-    set -l user (whoami)
-    set -l host (hostname -s 2>/dev/null; or hostname)
+    set -l user $USER
+    set -l host
+    if command -q hostname
+        set host (hostname -s 2>/dev/null; or hostname)
+    else
+        set host (string replace -r '\..*' '' $uname_nodename)
+    end
     set -a info_lines title (set_color cyan)"$user"(set_color white)"@"(set_color cyan)"$host"(set_color normal)
     set -a info_lines separator (set_color brblack)(string repeat -n (math (string length "$user") + 1 + (string length "$host")) '─')(set_color normal)
 
@@ -32,18 +52,21 @@ function fishfetch
         set -l os_name (sw_vers -productName 2>/dev/null; or echo macOS)
         set -l os_version (sw_vers -productVersion 2>/dev/null; or echo "")
         set -l os_build (sw_vers -buildVersion 2>/dev/null; or echo "")
-        set -l arch (uname -m)
-        set -a info_lines os "$os_name $os_version $os_build ($arch)"
+        set -a info_lines os "$os_name $os_version $os_build ($uname_machine)"
     else
         set -l os_pretty ""
         if test -f /etc/os-release
-            set os_pretty (grep -m1 '^PRETTY_NAME=' /etc/os-release | string replace 'PRETTY_NAME=' '' | string trim -c '"')
+            while read -l line
+                if string match -q 'PRETTY_NAME=*' $line
+                    set os_pretty (string replace 'PRETTY_NAME=' '' $line | string trim -c '"')
+                    break
+                end
+            end </etc/os-release
         end
         if test -z "$os_pretty"
             set os_pretty (uname -o 2>/dev/null; or echo Linux)
         end
-        set -l arch (uname -m)
-        set -a info_lines os "$os_pretty ($arch)"
+        set -a info_lines os "$os_pretty ($uname_machine)"
     end
 
     # Host / Model
@@ -62,11 +85,13 @@ function fishfetch
     else
         set -l product ""
         if test -f /sys/devices/virtual/dmi/id/product_name
-            set product (cat /sys/devices/virtual/dmi/id/product_name 2>/dev/null | string trim)
+            read product </sys/devices/virtual/dmi/id/product_name 2>/dev/null
+            set product (string trim $product)
         end
         set -l vendor ""
         if test -f /sys/devices/virtual/dmi/id/sys_vendor
-            set vendor (cat /sys/devices/virtual/dmi/id/sys_vendor 2>/dev/null | string trim)
+            read vendor </sys/devices/virtual/dmi/id/sys_vendor 2>/dev/null
+            set vendor (string trim $vendor)
         end
         if test -n "$product" -a "$product" != "System Product Name"
             if test -n "$vendor"
@@ -78,7 +103,7 @@ function fishfetch
     end
 
     # Kernel
-    set -a info_lines kernel (uname -r)
+    set -a info_lines kernel $uname_release
 
     # Uptime
     if test "$os_type" = Darwin
@@ -90,8 +115,10 @@ function fishfetch
         end
     else
         if test -f /proc/uptime
-            set -l up_secs (cat /proc/uptime | string split ' ')[1]
-            set -l up_secs (math "floor($up_secs)")
+            set -l uptime_raw
+            read uptime_raw </proc/uptime
+            set -l up_secs (string split ' ' $uptime_raw)[1]
+            set up_secs (math "floor($up_secs)")
             set -a info_lines uptime (_fishfetch_format_uptime $up_secs)
         end
     end
@@ -147,7 +174,15 @@ function fishfetch
             set -a info_lines cpu (string trim "$cpu")
         end
     else
-        set -l cpu (grep -m1 'model name' /proc/cpuinfo 2>/dev/null | string replace -r '.*: ' '')
+        set -l cpu ""
+        if test -f /proc/cpuinfo
+            while read -l line
+                if string match -q 'model name*' $line
+                    set cpu (string replace -r '.*: ' '' $line)
+                    break
+                end
+            end </proc/cpuinfo
+        end
         if test -n "$cpu"
             set -a info_lines cpu (string trim "$cpu")
         end
@@ -164,9 +199,25 @@ function fishfetch
             set -a info_lines gpu (string trim "$gpu")
         end
     else
-        if command -q lspci
-            set -l gpu (lspci 2>/dev/null | grep -i 'vga\|3d\|display' | head -1 | string replace -r '.*: ' '')
+        if test -n "$_ff_lspci_pid"
+            wait $_ff_lspci_pid
+            set -l gpu (grep -i 'vga\|3d\|display' $_ff_tmpdir/lspci 2>/dev/null | head -1 | string replace -r '.*: ' '')
             if test -n "$gpu"
+                # Strip "(rev XX)" suffix
+                set gpu (string replace -r '\s*\(rev \w+\)\s*$' '' $gpu | string trim)
+                # Extract last [bracketed product name] if present
+                set -l product (string match -r '.*\[([^\]]+)\][^\[]*$' $gpu)[2]
+                if test -n "$product"
+                    if string match -qi '*NVIDIA*' $gpu
+                        set gpu "NVIDIA $product"
+                    else if string match -qi '*AMD*' $gpu; or string match -qi '*ATI*' $gpu
+                        set gpu "AMD $product"
+                    else if string match -qi '*Intel*' $gpu
+                        set gpu "Intel $product"
+                    else
+                        set gpu $product
+                    end
+                end
                 set -a info_lines gpu (string trim "$gpu")
             end
         end
@@ -192,8 +243,16 @@ function fishfetch
         end
     else
         if test -f /proc/meminfo
-            set -l mem_total (grep MemTotal /proc/meminfo | string replace -r '.*: *(\d+).*' '$1')
-            set -l mem_avail (grep MemAvailable /proc/meminfo | string replace -r '.*: *(\d+).*' '$1')
+            set -l mem_total ""
+            set -l mem_avail ""
+            while read -l line
+                if string match -q 'MemTotal:*' $line
+                    set mem_total (string replace -r '.*: *(\d+).*' '$1' $line)
+                else if string match -q 'MemAvailable:*' $line
+                    set mem_avail (string replace -r '.*: *(\d+).*' '$1' $line)
+                end
+                test -n "$mem_total" -a -n "$mem_avail"; and break
+            end </proc/meminfo
             if test -n "$mem_total" -a -n "$mem_avail"
                 set -l mem_total_mib (math "floor($mem_total / 1024)")
                 set -l mem_used_mib (math "floor(($mem_total - $mem_avail) / 1024)")
@@ -202,8 +261,14 @@ function fishfetch
         end
     end
 
-    # Disk
-    set -l disk_info (df -h / 2>/dev/null | tail -1)
+    # Disk (wait for backgrounded df on Linux, run inline on macOS)
+    set -l disk_info ""
+    if test -n "$_ff_df_pid"
+        wait $_ff_df_pid
+        set disk_info (tail -1 $_ff_tmpdir/df 2>/dev/null)
+    else
+        set disk_info (df -h / 2>/dev/null | tail -1)
+    end
     if test -n "$disk_info"
         set -l disk_parts (string split -n ' ' (string trim "$disk_info"))
         # df -h columns: filesystem size used avail use% mount
@@ -233,8 +298,10 @@ function fishfetch
             end
         end
         if test -n "$bat_path"
-            set -l cap (cat "$bat_path/capacity" 2>/dev/null)
-            set -l status (cat "$bat_path/status" 2>/dev/null)
+            set -l cap
+            set -l status
+            read cap <"$bat_path/capacity" 2>/dev/null
+            read status <"$bat_path/status" 2>/dev/null
             if test -n "$cap"
                 set -a info_lines battery "$cap% [$status]"
             end
@@ -248,7 +315,8 @@ function fishfetch
 
     # Color palette
     set -a info_lines blank ""
-    set -a info_lines colors ""
+    set -a info_lines colors_normal ""
+    set -a info_lines colors_bright ""
 
     # ── Build Label Map ─────────────────────────────────────────────────
 
@@ -274,9 +342,10 @@ function fishfetch
             case battery;  echo $label_color"Battery"$reset": $value"
             case locale;   echo $label_color"Locale"$reset": $value"
             case blank;    echo ""
-            case colors
+            case colors_normal
                 set -l block "███"
                 printf "%s%s%s%s%s%s%s%s%s\n" \
+                    (set_color black)$block \
                     (set_color red)$block \
                     (set_color green)$block \
                     (set_color yellow)$block \
@@ -284,7 +353,18 @@ function fishfetch
                     (set_color magenta)$block \
                     (set_color cyan)$block \
                     (set_color white)$block \
+                    (set_color normal)
+            case colors_bright
+                set -l block "███"
+                printf "%s%s%s%s%s%s%s%s%s\n" \
                     (set_color brblack)$block \
+                    (set_color brred)$block \
+                    (set_color brgreen)$block \
+                    (set_color bryellow)$block \
+                    (set_color brblue)$block \
+                    (set_color brmagenta)$block \
+                    (set_color brcyan)$block \
+                    (set_color brwhite)$block \
                     (set_color normal)
         end
     end
