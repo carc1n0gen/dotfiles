@@ -299,11 +299,11 @@ function fishfetch
         end
         if test -n "$bat_path"
             set -l cap
-            set -l status
+            set -l bat_status
             read cap <"$bat_path/capacity" 2>/dev/null
-            read status <"$bat_path/status" 2>/dev/null
+            read bat_status <"$bat_path/status" 2>/dev/null
             if test -n "$cap"
-                set -a info_lines battery "$cap% [$status]"
+                set -a info_lines battery "$cap% [$bat_status]"
             end
         end
     end
