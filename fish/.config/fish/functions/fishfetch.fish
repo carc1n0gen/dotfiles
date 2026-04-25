@@ -4,7 +4,7 @@
 # system information with colored labels.
 #
 function fishfetch
-    # ── Gather System Info ──────────────────────────────────────────────
+    # Gather System Info
 
     # Parse uname once: "Linux hostname 6.x.x x86_64" or "Darwin hostname 24.x.x arm64"
     set -l uname_parts (string split ' ' (uname -snrm))
@@ -318,7 +318,7 @@ function fishfetch
     set -a info_lines colors_normal ""
     set -a info_lines colors_bright ""
 
-    # ── Build Label Map ─────────────────────────────────────────────────
+    # Build Label Map
 
     set -l label_color (set_color magenta)
     set -l reset (set_color normal)
@@ -369,7 +369,7 @@ function fishfetch
         end
     end
 
-    # ── Build output lines ──────────────────────────────────────────────
+    # Build output lines
 
     set -l rendered
     set -l i 1
@@ -380,7 +380,7 @@ function fishfetch
         set i (math $i + 2)
     end
 
-    # ── ASCII Art ───────────────────────────────────────────────────────
+    # ASCII Art
 
     set -l c1 (set_color cyan)
     set -l c2 (set_color brblue)
@@ -406,7 +406,7 @@ function fishfetch
 
     set -l art_width 36
 
-    # ── Render Side by Side ─────────────────────────────────────────────
+    # Render Side by Side
 
     set -l total_lines (count $art)
     if test (count $rendered) -gt $total_lines
