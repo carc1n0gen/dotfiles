@@ -1,0 +1,381 @@
+/* Gruvbox Dark palette
+ *   bg      #282828    bg1     #3c3836    bg2     #504945
+ *   fg      #ebdbb2    fg1     #d5c4a1    gray    #928374
+ *   red     #fb4934    green   #b8bb26    yellow  #fabd2f
+ *   blue    #83a598    purple  #d3869b    aqua    #8ec07c
+ *   orange  #fe8019
+ */
+
+:root {
+    --bg: #282828;
+    --bg1: #3c3836;
+    --bg2: #504945;
+    --fg: #ebdbb2;
+    --fg1: #d5c4a1;
+    --gray: #928374;
+    --red: #fb4934;
+    --green: #b8bb26;
+    --yellow: #fabd2f;
+    --blue: #83a598;
+    --purple: #d3869b;
+    --aqua: #8ec07c;
+    --orange: #fe8019;
+
+    --border-radius: 10px;
+    --border: 2px solid var(--gray);
+    --padding: 8px;
+}
+
+/* Notification popups  */
+
+.notification-row {
+    outline: none;
+}
+
+.notification-row:focus,
+.notification-row:hover {
+    background: transparent;
+}
+
+.notification {
+    background: var(--bg1);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+    margin: 4px 0;
+}
+
+.notification:hover {
+    border-color: var(--aqua);
+}
+
+.notification-content {
+    padding: 4px;
+}
+
+.notification-default-action {
+    border-radius: var(--border-radius);
+}
+
+.notification-default-action:hover {
+    background: var(--bg2);
+}
+
+.summary {
+    color: var(--fg);
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Noto Sans", sans-serif;
+}
+
+.body {
+    color: var(--fg1);
+    font-size: 13px;
+    font-family: "Noto Sans", sans-serif;
+}
+
+.time {
+    color: var(--gray);
+    font-size: 12px;
+    font-family: "Noto Sans Mono", monospace;
+}
+
+.image {
+    border-radius: var(--border-radius);
+    margin-right: 8px;
+}
+
+/* App name & icon */
+.app-name {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: bold;
+    font-family: "Noto Sans", sans-serif;
+}
+
+.app-icon {
+    -gtk-icon-effect: none;
+}
+
+/* Close button */
+.close-button {
+    background: var(--bg2);
+    color: var(--fg1);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 2px 6px;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+.close-button:hover {
+    background: var(--red);
+    color: var(--bg);
+}
+
+/* Notification action buttons (inline) */
+.notification-action {
+    background: var(--bg2);
+    color: var(--fg);
+    border: 2px solid var(--gray);
+    border-radius: var(--border-radius);
+    border-top: none;
+    padding: 4px 8px;
+    margin: 0 2px;
+}
+
+.notification-action:hover {
+    background: var(--bg2);
+    border-color: var(--aqua);
+    color: var(--aqua);
+}
+
+.notification-action:first-child {
+    border-bottom-left-radius: var(--border-radius);
+}
+
+.notification-action:last-child {
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/* Inline reply */
+.inline-reply {
+    border-radius: var(--border-radius);
+}
+
+.inline-reply-entry {
+    background: var(--bg);
+    color: var(--fg);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    caret-color: var(--aqua);
+    padding: 4px 8px;
+}
+
+.inline-reply-button {
+    background: var(--bg2);
+    color: var(--fg);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    margin-left: 4px;
+    padding: 4px 8px;
+}
+
+.inline-reply-button:hover {
+    border-color: var(--aqua);
+    color: var(--aqua);
+}
+
+/* Urgency levels */
+.low {
+    border-color: var(--gray);
+}
+
+.normal {
+    border-color: var(--gray);
+}
+
+.critical {
+    border-color: var(--red);
+}
+
+/* Notification group */
+.notification-group {
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+}
+
+.notification-group-headers {
+    color: var(--fg1);
+    font-size: 13px;
+    font-weight: bold;
+    font-family: "Noto Sans", sans-serif;
+}
+
+.notification-group-icon {
+    -gtk-icon-effect: none;
+}
+
+.notification-group-collapse-button {
+    background: var(--bg2);
+    color: var(--fg1);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 2px 8px;
+}
+
+.notification-group-collapse-button:hover {
+    background: var(--bg2);
+    color: var(--aqua);
+}
+
+.notification-group-close-all-button {
+    background: var(--bg2);
+    color: var(--fg1);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 2px 8px;
+}
+
+.notification-group-close-all-button:hover {
+    background: var(--red);
+    color: var(--bg);
+}
+
+/* Control center */
+
+.control-center {
+    background: rgba(40, 40, 40, 0.92);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+}
+
+.control-center-list-placeholder {
+    color: var(--gray);
+    font-size: 14px;
+    font-family: "Noto Sans", sans-serif;
+    padding: 16px;
+}
+
+/* Widgets */
+
+.widgets > .widget,
+.widget-mpris > carouselindicatordots,
+.widget-mpris > box > button {
+    background: var(--bg1);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+    color: var(--fg);
+    font-family: "Noto Sans", sans-serif;
+}
+
+/* Title widget */
+.widget-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.widget-title > label {
+    color: var(--fg);
+}
+
+.widget-title > button {
+    background: var(--bg2);
+    color: var(--fg1);
+    border: 2px solid var(--gray);
+    border-radius: var(--border-radius);
+    padding: 4px 12px;
+    font-size: 13px;
+}
+
+.widget-title > button:hover {
+    background: var(--red);
+    color: var(--bg);
+    border-color: var(--red);
+}
+
+/* DND widget */
+.widget-dnd {
+    font-size: 14px;
+}
+
+.widget-dnd > switch {
+    background: var(--bg2);
+    border: 2px solid var(--gray);
+    border-radius: 12px;
+}
+
+.widget-dnd > switch:checked {
+    background: var(--orange);
+    border-color: var(--orange);
+}
+
+.widget-dnd > switch slider {
+    background: var(--fg);
+    border-radius: 50%;
+}
+
+/* Inhibitors widget */
+.widget-inhibitors {
+    font-size: 14px;
+}
+
+.widget-inhibitors > button {
+    background: var(--bg2);
+    color: var(--fg1);
+    border: 2px solid var(--gray);
+    border-radius: var(--border-radius);
+    padding: 4px 12px;
+    font-size: 13px;
+}
+
+.widget-inhibitors > button:hover {
+    background: var(--red);
+    color: var(--bg);
+    border-color: var(--red);
+}
+
+/* Label widget */
+.widget-label {
+    color: var(--fg1);
+    font-size: 14px;
+}
+
+/* MPRIS widget */
+.widget.widget-mpris {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+.widget-mpris > carouselindicatordots {
+    padding: 4px;
+    margin: 0;
+    margin-top: var(--padding);
+}
+
+.widget-mpris > box > button:hover {
+    background: var(--bg2);
+    border-color: var(--aqua);
+}
+
+.widget-mpris-player {
+    background: var(--bg1);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+    box-shadow: none;
+    margin: 0 var(--padding);
+}
+
+.widget-mpris-player:only-child {
+    margin: 0;
+}
+
+.widget-mpris-title {
+    color: var(--fg);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.widget-mpris-subtitle {
+    color: var(--fg1);
+    font-size: 13px;
+}
+
+.widget-mpris-player button {
+    color: var(--fg1);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 4px;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.widget-mpris-player button:hover {
+    background: var(--bg2);
+    color: var(--aqua);
+}
