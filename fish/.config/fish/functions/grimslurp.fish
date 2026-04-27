@@ -27,7 +27,8 @@ function grimslurp
         if status is-interactive
             echo "Image saved to $image_path and copied to clipboard."
         else
-            notify-send "Screenshot saved" "Saved to $image_path and copied to clipboard." -i "$image_path" -a "Screenshot"
+            # Spawn notify-send in the background so it doesn't block waiting for the click action
+            fish -c "notify-send 'Screenshot saved' 'Saved to $image_path and copied to clipboard.' -i '$image_path' -a Screenshot --action=default=Open && xdg-open '$image_path'" &
         end
     else
         if status is-interactive
