@@ -6,6 +6,7 @@
     "format-icons": ["", "", "", "", "", "", "", "", ""],
   },
   "battery": {
+    "bat": "BAT0",
     "states": {
       "full": 100,
       "high": 75,
