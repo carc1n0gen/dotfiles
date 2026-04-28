@@ -56,7 +56,7 @@
   "custom/power": {
     "tooltip": false,
     "on-click": "wlogout &",
-    "format": "⏼",
+    "format": "",
   },
   "custom/screenshot": {
     "format": "󰄀",
@@ -97,6 +97,7 @@
       "(.*) — Mozilla Firefox": "<span color=\"orangered\">󰈹</span> $1", // Note the em dash
       "(~.*)": " $1",
       "(.*) (~.*)": " $1 $2",
+      "(.*) — Dolphin": "󰉋 $1",
     },
   },
   "hyprland/workspaces": {
