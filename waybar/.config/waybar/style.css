@@ -3,7 +3,7 @@
 @define-color waybar-bg transparent;
 @define-color section-bg @dark1;
 @define-color section-border @gray;
-@define-color fg @light0;
+@define-color fg @light3;
 
 @define-color danger @bright_red;
 @define-color warning @bright_orange;
@@ -122,7 +122,7 @@ window#waybar.empty #group-windows {
 }
 
 #clock {
-    color: @bright_blue;
+    /*color: @bright_blue;*/
 }
 
 /*#cpu {
@@ -175,7 +175,7 @@ window#waybar.empty #group-windows {
 }*/
 
 #custom-notification {
-    color: @faded_yellow;
+    /*color: @faded_yellow;*/
 }
 
 #custom-notification.notification {
@@ -183,7 +183,7 @@ window#waybar.empty #group-windows {
 }
 
 #custom-power {
-    color: @bright_red;
+    color: @bright_blue;
 }
 
 #custom-screenshot {
