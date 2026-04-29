@@ -95,6 +95,7 @@
     "rewrite": {
       "(.*) - Discord": "<span color=\"cornflowerblue\"></span> $1",
       "(.*) — Mozilla Firefox": "<span color=\"orangered\">󰈹</span> $1", // Note the em dash
+      "Mozilla Firefox": "<span color=\"orangered\">󰈹</span> Firefox Home",
       "(~.*)": " $1",
       "(.*) (~.*)": " $1 $2",
       "(.*) — Dolphin": "󰉋 $1",
