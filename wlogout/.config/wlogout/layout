@@ -1,12 +1,12 @@
 {
     "label" : "lock",
-    "action" : "loginctl lock-session",
+    "action" : "sh -c 'loginctl lock-session'",
     "text" : "Lock",
     "keybind" : "l"
 }
 {
     "label" : "hibernate",
-    "action" : "systemctl hibernate",
+    "action" : "sh -c 'if command -v systemctl >/dev/null 2>&1; then systemctl hibernate; else loginctl hibernate; fi'",
     "text" : "Hibernate",
     "keybind" : "h"
 }
@@ -18,19 +18,19 @@
 }
 {
     "label" : "shutdown",
-    "action" : "systemctl poweroff",
+    "action" : "sh -c 'if command -v systemctl >/dev/null 2>&1; then systemctl poweroff; else loginctl poweroff; fi'",
     "text" : "Shutdown",
     "keybind" : "s"
 }
 {
     "label" : "suspend",
-    "action" : "systemctl suspend",
+    "action" : "sh -c 'if command -v systemctl >/dev/null 2>&1; then systemctl suspend; else loginctl suspend; fi'",
     "text" : "Suspend",
     "keybind" : "u"
 }
 {
     "label" : "reboot",
-    "action" : "systemctl reboot",
+    "action" : "sh -c 'if command -v systemctl >/dev/null 2>&1; then systemctl reboot; else loginctl reboot; fi'",
     "text" : "Reboot",
     "keybind" : "r"
 }
