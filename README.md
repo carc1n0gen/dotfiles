@@ -20,9 +20,9 @@ dotfiles/
 │   ├── .config/
 │   │   └── fish/
 │   │       └── config.fish
-|   |       └── functions/
-|   |           └── fish_prompt.fish
-|   |           └── fish_greeting.fish
+│   │       └── functions/
+│   │           └── fish_prompt.fish
+│   │           └── fish_greeting.fish
 ├── hypr/
 │   ├── .config/
 │   │   └── hypr/
