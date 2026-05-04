@@ -158,8 +158,10 @@
   },
   "pulseaudio": {
     // "scroll-step": 1, // %, can be a float
-    "format": "{icon} {volume}%",
-    "format-muted": "",
+    "format": "{icon} {volume}% {format_source}",
+    "format-muted": "<span color=\"#fb4934\"></span>  {format_source}",
+    "format-source": "󰍬",
+    "format-source-muted": "<span color=\"#fb4934\">󰍭</span>",
     "format-icons": {
       "default": ["", "", ""],
     },

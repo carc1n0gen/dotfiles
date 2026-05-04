@@ -274,7 +274,7 @@ window#waybar.empty #group-windows {
 }
 
 #pulseaudio.muted {
-    color: @danger;
+    /*color: @danger;*/
 }
 
 #window {
