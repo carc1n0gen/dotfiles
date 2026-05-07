@@ -1,3 +1,3 @@
 if status is-interactive
-    set -gx PATH ~/.local/bin $PATH
+    set -gx PATH ~/.local/bin ~/.codon/bin $PATH
 end
