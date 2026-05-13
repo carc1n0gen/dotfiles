@@ -2,6 +2,7 @@
 # Custom Fish prompt with Git info, Node version, Python virtualenv, and time display.
 #
 function fish_prompt
+    set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
     set -l last_status $status
 
     if test $last_status -eq 0
