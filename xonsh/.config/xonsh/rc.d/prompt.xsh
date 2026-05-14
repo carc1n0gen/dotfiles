@@ -2,6 +2,9 @@
 # Custom Xonsh prompt with Git info, Node version, Python virtualenv, and time display.
 #
 
+if not $XONSH_INTERACTIVE:
+    return
+
 import os
 import re
 import shutil
