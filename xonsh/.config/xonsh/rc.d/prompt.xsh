@@ -70,14 +70,14 @@ if $XONSH_INTERACTIVE:
 
         nf = 'NERD_FONT' in ${...}
         # Symbols - Nerd-Font glyphs when $NERD_FONT is set, plain Unicode otherwise
-        branch_sym    = '' if nf else '⎇'
-        staged_sym    = '' if nf else '+'
+        branch_sym    = '' if nf else '⎇'
+        staged_sym    = '󱇬' if nf else '+'
         unstaged_sym  = '' if nf else '⚑'
         untracked_sym = '󰀦' if nf else '⚠'
-        clean_sym     = '󰸞' if nf else '✔'
-        stash_sym     = '' if nf else '≡'
-        up_sym        = '' if nf else '↑'
-        down_sym      = '' if nf else '↓'
+        clean_sym     = '' if nf else '✔'
+        stash_sym     = '' if nf else '≡'
+        up_sym        = '' if nf else '↑'
+        down_sym      = '' if nf else '↓'
 
         # status flags
         status = ''

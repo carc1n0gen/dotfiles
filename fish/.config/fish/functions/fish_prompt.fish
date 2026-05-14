@@ -17,7 +17,7 @@ function fish_prompt
     set -l branch (git branch --show-current 2>/dev/null)
     if test -n "$branch"
         set -l branch_symbol (if set -q NERD_FONT; echo ""; else echo "⎇"; end)
-        set -l staged_symbol (if set -q NERD_FONT; echo ""; else echo "+"; end)
+        set -l staged_symbol (if set -q NERD_FONT; echo "󱇬"; else echo "+"; end)
         set -l unstaged_symbol (if set -q NERD_FONT; echo ""; else echo "⚑"; end)
         set -l untracked_symbol (if set -q NERD_FONT; echo "󰀦"; else echo "⚠"; end)
         set -l clean_symbol (if set -q NERD_FONT; echo "󰸞"; else echo "✔"; end)
