@@ -6,5 +6,5 @@ if !(which fnm 2>/dev/null).returncode == 0:
 
     @events.on_chdir
     def _fnm_auto_switch(olddir, newdir, **kwargs):
-        if pf'{newdir}/.node-version'.exists() or pf'{newdir}/.nvmrc'.exists():
+        if pf"{newdir}/.node-version".exists() or pf"{newdir}/.nvmrc".exists():
             fnm use --silent-if-unchanged
